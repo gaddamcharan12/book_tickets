@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Mania - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?cinema,movie') no-repeat center center/cover;
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="w-full p-5 bg-black bg-opacity-75 shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-3xl font-extrabold text-yellow-400 uppercase tracking-wider">Movie Mania</h1>
+            </div>
+            
+            <div class="flex item-center space-x-4">
+                <a href="{{ url_for('dashboard') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Dashboard</a>
+                <a href="{{ url_for('login') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Login</a>
+                <a href="{{ url_for('signup') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Signup</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="flex justify-center mt-10 px-4 animate-fadeInUp">
+        <form action="{{ url_for('search_movie') }}" method="GET" class="w-full md:w-1/2 relative group">
+            <input type="text" name="q" placeholder="Search movies by name..."
+                   class="w-full px-5 py-3 text-gray-900 rounded-full shadow-xl transition duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 placeholder-gray-500"
+                   value="{{ request.args.get('q', '') }}">
+            <button type="submit" 
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-4 py-1 rounded-full shadow-lg transition duration-300">
+                🔍
+            </button>
+        </form>
+    </div>
+
+    <!-- Flash message (optional) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="container mx-auto mt-4">
+          {% for category, message in messages %}
+            <div class="bg-yellow-500 text-black text-sm px-4 py-2 rounded shadow-md text-center">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Now Showing Section -->
+    <main class="container mx-auto py-10">
+        <h2 class="text-3xl text-center text-yellow-400 font-bold mb-8">Now Showing</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4">
+            {% for movie in movies %}
+            <div class="bg-black bg-opacity-70 rounded-lg p-6 shadow-lg text-center transform hover:scale-105 transition duration-300">
+                <img src="{{ url_for('static', filename='images/' + movie.image_url) }}" class="w-40 h-60 object-cover mx-auto rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mt-3">{{ movie.name }}</h3>
+                <p class="text-gray-400">{{ movie.genre }} | {{ movie.duration }} min</p>
+                <p class="text-yellow-400 font-bold text-lg mt-2"><strong>Price:</strong> ₹{{ movie.price }}</p>
+                <a href="{{ url_for('book', movie_id=movie.id) }}" 
+                   class="mt-4 inline-block bg-yellow-500 text-gray-900 px-5 py-2 rounded-lg font-bold text-sm 
+                          hover:bg-yellow-400 transition duration-300">
+                   Book Now
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>    
+
+    <!-- Footer -->
+    <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg mt-10">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+            <p>Secure payments for movie lovers.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

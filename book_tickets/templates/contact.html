@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Movie Mania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?cinema,movie') no-repeat center center/cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white">
+    <!-- Header with Back to Home -->
+    <header class="w-full flex justify-between items-center p-5 bg-black bg-opacity-75 shadow-lg">
+        <h1 class="text-3xl font-extrabold text-yellow-400 tracking-wider uppercase">Movie Mania</h1>
+        <a href="{{ url_for('landing_page') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-lg font-semibold shadow-md transition duration-300">
+            Back to Home
+        </a>
+    </header>
+
+    <!-- Contact Info Section -->
+    <main class="flex flex-col items-center justify-center min-h-screen px-4 py-10">
+        <div class="bg-black bg-opacity-70 p-10 rounded-2xl shadow-2xl max-w-3xl w-full text-center">
+            <h2 class="text-4xl font-bold text-yellow-400 mb-6">Contact Us</h2>
+            <p class="text-lg text-gray-300 mb-4">
+                At <span class="font-semibold text-white">Movie Mania</span>, we're always here to assist you. Whether you have questions, suggestions, or need help with your bookings — don't hesitate to reach out.
+            </p>
+            <div class="text-left text-gray-300 mt-6 space-y-4">
+                <p><span class="text-yellow-400 font-semibold">📧 Email:</span> support@moviemania.com</p>
+                <p><span class="text-yellow-400 font-semibold">📞 Phone:</span> +91 98765 43210</p>
+                <p><span class="text-yellow-400 font-semibold">📍 Address:</span> 123 Cineplex Avenue, Film City, Mumbai, India</p>
+                <p><span class="text-yellow-400 font-semibold">🕒 Working Hours:</span> 10:00 AM – 8:00 PM (IST), Monday to Saturday</p>
+            </div>
+            <p class="text-sm text-gray-400 mt-8 italic">
+                We're committed to making your movie-going experience smooth and exciting. Thanks for choosing Movie Mania!
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+            <p>Secure access for movie lovers.</p>
+        </div>
+    </footer>
+</body>
+</html>

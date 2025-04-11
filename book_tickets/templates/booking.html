@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Tickets - {{ movie.name }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .seat {
+      width: 35px;
+      height: 35px;
+      margin: 5px;
+      background-color: #2d3748;
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.9rem;
+    }
+    .seat.selected { background-color: #38b2ac; }
+    .seat.booked { background-color: #e53e3e; cursor: not-allowed; }
+    body {
+      background: url('https://source.unsplash.com/1600x900/?cinema,movie') no-repeat center center/cover;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="w-full p-5 bg-black bg-opacity-75 shadow-lg">
+    <nav class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-extrabold text-yellow-400 uppercase tracking-wider">Movie Mania</h1>
+      <div>
+        <a href="{{ url_for('index') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Home</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Booking Section -->
+  <main class="container mx-auto flex-grow py-10 px-4">
+    <h1 class="text-4xl font-bold text-center text-yellow-400 mb-10">Book Your Seats</h1>
+
+    <div class="flex flex-col md:flex-row gap-8 items-start">
+      <!-- Poster -->
+      <div class="w-full md:w-1/3">
+        <img src="{{ url_for('static', filename='images/' + movie.image_url) }}"
+             alt="{{ movie.name }}"
+             class="rounded-xl shadow-lg w-full max-h-80 object-contain mx-auto">
+      </div>
+
+      <!-- Booking Card -->
+      <div class="w-full md:w-2/3 bg-black bg-opacity-70 p-6 rounded-xl shadow-lg">
+        <h2 class="text-3xl text-yellow-400 font-bold mb-2">{{ movie.name }}</h2>
+        <p class="mb-1"><strong>Genre:</strong> {{ movie.genre }}</p>
+        <p class="mb-1"><strong>Duration:</strong> {{ movie.duration }} minutes</p>
+        <p class="mb-4 text-yellow-300"><strong>Price per Ticket:</strong> ₹{{ movie.price }}</p>
+
+        <form id="booking-form" method="POST" action="{{ url_for('book', movie_id=movie.id) }}" class="space-y-4">
+          <div class="grid grid-cols-5 gap-4">
+            {% for row in ['A', 'B', 'C', 'D', 'E'] %}
+              <div>
+                <div class="font-bold mb-2">{{ row }}</div>
+                {% for i in range(1, 11) %}
+                  {% set seat_num = row ~ i %}
+                  {% set seat = seats | selectattr("seat_number", "equalto", seat_num) | list | first %}
+                  {% if seat %}
+                    <label class="seat {% if seat.is_booked %}booked{% endif %}" data-seat="{{ seat.seat_number }}">
+                      <input type="checkbox"
+                             name="selected_seats"
+                             value="{{ seat.seat_number }}"
+                             {% if seat.is_booked %}disabled{% endif %}
+                             class="hidden seat-checkbox"/>
+                      <span>{{ seat.seat_number }}</span>
+                    </label>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- Selected Summary -->
+          <div class="mt-6">
+            <p class="text-lg">Total Selected Seats: <span id="seat-count">0</span></p>
+            <p class="text-lg">Total Price: ₹<span id="total-price">0</span></p>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="mt-4 px-6 py-2 bg-yellow-400 text-black rounded hover:bg-yellow-300 font-semibold">
+            Book Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg mt-10">
+    <div class="container mx-auto">
+      <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+      <p>Secure payments for movie lovers.</p>
+    </div>
+  </footer>
+
+  <!-- JS for Seat Selection -->
+  <script>
+    const seatLabels = document.querySelectorAll('.seat:not(.booked)');
+    const seatCount = document.getElementById('seat-count');
+    const totalPrice = document.getElementById('total-price');
+    const pricePerTicket = Number("{{ movie.price }}");
+
+    seatLabels.forEach(label => {
+      label.addEventListener('click', (e) => {
+        const checkbox = label.querySelector('input[type="checkbox"]');
+        if (!checkbox.disabled) {
+          checkbox.checked = !checkbox.checked;
+          label.classList.toggle('selected', checkbox.checked);
+
+          const selected = document.querySelectorAll('.seat input[type="checkbox"]:checked');
+          seatCount.textContent = selected.length;
+          totalPrice.textContent = selected.length * pricePerTicket;
+        }
+      });
+    });
+
+    // Prevent form submission if no seat is selected
+    document.getElementById('booking-form').addEventListener('submit', function (e) {
+      const selected = document.querySelectorAll('.seat input[type="checkbox"]:checked');
+      if (selected.length === 0) {
+        e.preventDefault();
+        alert("Please select at least one seat before proceeding.");
+      }
+    });
+  </script>
+</body>
+</html>

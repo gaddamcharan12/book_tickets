@@ -1,0 +1,111 @@
+/* General Styles */
+body {
+    background-color: #0b0f19;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1a2238;
+    padding: 15px 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    background: #007bff;
+    border-radius: 5px;
+}
+
+/* Movie Section */
+.movie-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 20px;
+    scroll-behavior: smooth;
+}
+
+.movie-card {
+    flex: 0 0 auto;
+    width: 180px;
+    background: #1a2238;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.movie-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.movie-card:hover {
+    transform: scale(1.1);
+}
+
+/* Booking Form */
+.booking-form {
+    background: #1a2238;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.booking-form input {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-secondary {
+    background: gray;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: darkgray;
+}

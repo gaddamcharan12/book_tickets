@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Mania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?cinema,movie') no-repeat center center/cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white">
+    <!-- Header -->
+    <header class="w-full flex justify-between items-center p-5 bg-black bg-opacity-75 shadow-lg relative z-50">
+        <!-- Center Title -->
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+            <h1 class="text-3xl font-extrabold text-yellow-400 tracking-wider uppercase">Movie Mania</h1>
+        </div>
+
+        <!-- Spacer -->
+        <div></div>
+
+        <!-- Hamburger Menu -->
+        <div class="relative">
+            <button id="menuToggle" class="flex flex-col space-y-1 p-2 hover:bg-yellow-500 hover:bg-opacity-30 rounded focus:outline-none">
+                <span class="w-6 h-0.5 bg-yellow-400"></span>
+                <span class="w-6 h-0.5 bg-yellow-400"></span>
+                <span class="w-6 h-0.5 bg-yellow-400"></span>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="menuDropdown" class="absolute right-0 mt-2 bg-black bg-opacity-90 rounded-md shadow-lg hidden transition-all duration-300 ease-in-out">
+                <a href="{{ url_for('landing_page') }}" class="block px-6 py-3 text-yellow-400 hover:bg-yellow-500 hover:text-black transition">Home</a>
+                <a href="{{ url_for('about') }}" class="block px-6 py-3 text-yellow-400 hover:bg-yellow-500 hover:text-black transition">About</a>
+                <a href="{{ url_for('contact') }}" class="block px-6 py-3 text-yellow-400 hover:bg-yellow-500 hover:text-black transition">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col items-center justify-center text-center p-6">
+        <div class="bg-black bg-opacity-70 p-10 rounded-2xl shadow-2xl max-w-lg">
+            <h1 class="text-5xl font-extrabold text-yellow-400 mb-6 drop-shadow-lg">Welcome to Cine World</h1>
+            <p class="text-lg text-gray-300 mb-8">Experience the thrill of cinema! Book tickets for the latest blockbusters and re-releases with ease and convenience.</p>
+
+            <!-- Buttons -->
+            <div class="flex flex-col space-y-4 items-center">
+                <a href="{{ url_for('login') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-lg font-semibold shadow-lg transition duration-300 w-40 text-center">Login</a>
+                <a href="{{ url_for('signup') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition duration-300 w-40 text-center">Signup</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+            <p>Secure access for movie lovers.</p>
+        </div>
+    </footer>
+
+    <!-- Toggle Script -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const menuDropdown = document.getElementById('menuDropdown');
+
+        menuToggle.addEventListener('click', () => {
+            menuDropdown.classList.toggle('hidden');
+        });
+
+        // Optional: Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!menuToggle.contains(event.target) && !menuDropdown.contains(event.target)) {
+                menuDropdown.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

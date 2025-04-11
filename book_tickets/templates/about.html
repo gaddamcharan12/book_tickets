@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Movie Mania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?cinema,movie') no-repeat center center/cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white">
+    <!-- Header with Back to Home -->
+    <header class="w-full flex justify-between items-center p-5 bg-black bg-opacity-75 shadow-lg">
+        <h1 class="text-3xl font-extrabold text-yellow-400 tracking-wider uppercase">Movie Mania</h1>
+        <a href="{{ url_for('landing_page') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-lg font-semibold shadow-md transition duration-300">
+            Back to Home
+        </a>
+    </header>
+
+    <!-- About Content -->
+    <main class="flex flex-col items-center justify-center min-h-screen px-4 py-10">
+        <div class="bg-black bg-opacity-70 p-10 rounded-2xl shadow-2xl max-w-4xl text-center">
+            <h1 class="text-4xl font-bold text-yellow-400 mb-6">About Movie Mania</h1>
+            <p class="text-lg text-gray-300 leading-relaxed mb-4">
+                <strong>Movie Mania</strong> is your all-in-one destination for booking movie tickets from the comfort of your home. Designed with simplicity, speed, and a beautiful interface, we aim to bring you the magic of cinema at your fingertips.
+            </p>
+            <p class="text-lg text-gray-300 leading-relaxed mb-4">
+                Whether you're catching the latest blockbuster, a regional classic, or a nostalgic re-release, our platform makes the entire booking experience effortless. You can choose your seats, make secure payments, and even keep track of your past bookings all in one place.
+            </p>
+
+            <h2 class="text-2xl font-semibold text-yellow-300 mt-6 mb-2">✨ Why Movie Mania?</h2>
+            <ul class="list-disc list-inside text-gray-300 text-lg space-y-2 text-left">
+                <li>🚀 Fast and easy movie ticket booking</li>
+                <li>🎟️ Choose your own seats with live availability</li>
+                <li>🔒 Secure payment processing with real bank validation</li>
+                <li>🖼️ Beautiful and responsive user interface</li>
+                <li>🧾 View and manage your past bookings</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold text-yellow-300 mt-6 mb-2">🎯 Our Mission</h2>
+            <p class="text-lg text-gray-300 leading-relaxed">
+                Our mission is to make movie ticket booking not just easier, but also enjoyable. We're passionate about movies, and we're here to create a platform that every movie lover would love to use — whether on mobile, tablet, or desktop.
+            </p>
+
+            <h2 class="text-2xl font-semibold text-yellow-300 mt-6 mb-2">🌍 Join Us</h2>
+            <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                Movie Mania is constantly evolving, adding new features and improving based on your feedback. Join us in this journey of redefining movie ticketing. Stay tuned for exciting features like loyalty points, special discounts, and more!
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+            <p>Secure access for movie lovers.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Account Details - Movie Mania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?cinema,finance') no-repeat center center/cover;
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="w-full p-5 bg-black bg-opacity-75 shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-3xl font-extrabold text-yellow-400 uppercase tracking-wider">Movie Mania</h1>
+            </div>
+            <div class="flex item-center space-x-4">
+                <a href="{{ url_for('index') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Home</a>
+                <a href="{{ url_for('dashboard') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Dashboard</a>
+                <a href="{{ url_for('logout') }}" class="bg-red-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Account Section -->
+    <main class="flex-grow container mx-auto px-4 py-10 animate-fadeInUp">
+        <h2 class="text-3xl text-center text-yellow-400 font-bold mb-8">Bank Account Overview</h2>
+        <div class="max-w-xl mx-auto bg-black bg-opacity-60 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-yellow-500">
+            {% if account %}
+                <p class="text-lg mb-4"><span class="text-yellow-300 font-semibold">Bank Name:</span> {{ account.bank_name }}</p>
+                <p class="text-lg mb-4"><span class="text-yellow-300 font-semibold">Account User:</span> {{ account.account_user }}</p>
+                <p class="text-lg mb-4"><span class="text-yellow-300 font-semibold">Card Number:</span> **** **** **** {{ account.card_number[-4:] }}</p>
+                <p class="text-xl font-bold text-green-400 mb-2">💰 Current Balance: ₹{{ account.balance }}</p>
+            {% else %}
+                <p class="text-red-400 text-center font-semibold">⚠️ No bank account linked to your profile.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg mt-10">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+            <p>Secure payments for movie lovers.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

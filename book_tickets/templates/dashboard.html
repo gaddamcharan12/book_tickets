@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard - Movie Mania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?cinema,movie') no-repeat center center/cover;
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 bg-opacity-80 text-white flex flex-col min-h-screen">
+
+    <!-- 🔝 Header/Navbar -->
+    <header class="w-full p-5 bg-black bg-opacity-75 shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-yellow-400 uppercase tracking-wider">Movie Mania</h1>
+            <div class="flex items-center space-x-4">
+                <a href="{{ url_for('index') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Browse Movies</a>
+                <a href="{{ url_for('account') }}" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 font-semibold transition">Account</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 📄 Main Dashboard Content -->
+    <main class="flex-grow container mx-auto p-6 space-y-10 animate-fadeInUp">
+
+        <!-- User Info -->
+        <section>
+            <div class="bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-yellow-500">
+                <h2 class="text-xl font-bold text-yellow-300">Welcome, {{ user.username }}!</h2>
+                <p class="text-gray-300">Email: {{ user.email }}</p>
+            </div>
+        </section>
+
+        <!-- Past Bookings -->
+        <section>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">Your Bookings</h2>
+            {% if past_bookings %}
+                <ul class="bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-2xl shadow-lg space-y-4">
+                    {% for booking in past_bookings %}
+                        <li class="border-b border-gray-600 pb-2">
+                            <span class="text-yellow-400 font-semibold">{{ booking.movie_name }}</span> 
+                            – 🎟️ {{ booking.tickets }} 
+                            – 📅 {{ booking.booking_date.strftime('%Y-%m-%d') }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-300">You haven't booked any movies yet.</p>
+            {% endif %}
+        </section>
+
+        <!-- Recommended Movies -->
+        <section>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">Recommended Movies</h2>
+            <div class="flex overflow-x-auto space-x-6 pb-2">
+                {% for movie in recommended_movies %}
+                    <div class="bg-black bg-opacity-60 backdrop-blur-md p-4 rounded-xl shadow-md w-64 border border-yellow-500">
+                        <img src="{{ url_for('static', filename='images/' ~ movie.image_url) }}" alt="{{ movie.name }}" class="w-full h-40 object-cover rounded-md shadow">
+                        <h3 class="text-lg font-semibold text-yellow-300 mt-3">{{ movie.name }}</h3>
+                        <p class="text-sm text-gray-300">Genre: {{ movie.genre }}</p>
+                        <a href="{{ url_for('book', movie_id=movie.id) }}" class="mt-3 inline-block w-full text-center bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg hover:bg-yellow-400 transition">Book Now</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Upcoming Movies -->
+        <section>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">Upcoming Movies</h2>
+            <div class="flex overflow-x-auto space-x-6 pb-2">
+                {% for movie in upcoming_movies %}
+                    <div class="bg-black bg-opacity-60 backdrop-blur-md p-4 rounded-xl shadow-md w-64 border border-yellow-500">
+                        <img src="{{ url_for('static', filename='images/' ~ movie.image_url) }}" alt="{{ movie.name }}" class="w-full h-40 object-cover rounded-md shadow">
+                        <h3 class="text-lg font-semibold text-yellow-300 mt-3">{{ movie.name }}</h3>
+                        <p class="text-sm text-gray-300">Genre: {{ movie.genre }}</p>
+                        <p class="text-sm text-gray-300">Duration: {{ movie.duration }} min</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">Quick Actions</h2>
+            <div class="flex flex-wrap gap-4">
+                {% if recommended_movies %}
+                    <a href="{{ url_for('book', movie_id=recommended_movies[0].id) }}" class="bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition">Book Recommended</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-500 transition">Logout</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 🔻 Footer -->
+    <footer class="w-full p-6 bg-black bg-opacity-75 text-center text-gray-300 text-sm shadow-lg mt-10">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Movie Mania. All rights reserved.</p>
+            <p>Secure payments for movie lovers.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

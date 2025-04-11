@@ -1,0 +1,7 @@
+Flask==3.0.0
+Flask-MySQLdb==2.0.0
+mysqlclient==2.2.0  # Replaces MySQLdb
+Werkzeug==3.0.1  # Ensure compatibility with Flask 3
+Jinja2==3.1.2
+python-dotenv==1.0.1  # Recommended for .env support
+bcrypt==4.0.1  # Needed for password hashing
